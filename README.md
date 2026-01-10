@@ -35,6 +35,13 @@ Evaluates whether categorical and datetime columns in a DataFrame conform to pre
 
 While standard libraries like Pandas provide tools to transform data, **Datacure** provides the rules to validate it. By focusing on data cleaning - structural integrity, column consistency, and value range constraints - it allows developers to build more resilient data pipelines with less boilerplate code.
 
+**Numeric value checks**
+Numeric value checks ensure that numerical columns contain valid and meaningful values. These checks help detect outliers, impossible values, and violations of constraints that should logically apply to the data.
+
+   
+**Column-level checks**
+Column-level checks inspect each column individually to understand data quality and readiness for cleaning or modeling. These checks evaluate the composition, completeness, and consistency of columns.
+
 ## Get started
 
 You can install this package into your preferred Python environment using pip:
