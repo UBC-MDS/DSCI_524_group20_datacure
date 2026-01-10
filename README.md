@@ -66,8 +66,6 @@ You can install this package into your preferred Python environment using pip:
 $ pip install datacure
 ```
 
-TODO: Add a brief example of how to use the package to this section
-
 To use datacure in your code:
 
 ``` python
