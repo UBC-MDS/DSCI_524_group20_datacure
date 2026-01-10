@@ -37,10 +37,18 @@ While standard libraries like Pandas provide tools to transform data, **Datacure
 
 **Numeric value checks**
 Numeric value checks ensure that numerical columns contain valid and meaningful values. These checks help detect outliers, impossible values, and violations of constraints that should logically apply to the data.
-
+-  `validate_numeric_column(df, column, min_value,max_value,allow_negative)`
+   - Verifys that numeric values fall within an expected range.
+   - Detects negative values where they are not allowed
+   - Identifies values that violate domain-specific boundaries.
    
 **Column-level checks**
 Column-level checks inspect each column individually to understand data quality and readiness for cleaning or modeling. These checks evaluate the composition, completeness, and consistency of columns.
+-  ` summarize_column_quality(df,target_column)`
+   - Confirms the required columns (e.g., the target column) are present.
+   - Checks data type consistency across each column
+   - Calculates the number and percentage of missing values
+   - Reports the number of unique values to identify high-cardinality or low-variance columns
 
 ## Get started
 
