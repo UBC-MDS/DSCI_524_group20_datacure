@@ -33,6 +33,7 @@ Evaluates whether categorical and datetime columns in a DataFrame conform to pre
     - Returns either a success message or detailed diagnostics for columns that fail validation.
 
 **Numeric EDA Plotting**
+
 Provides a set of exploratory data analysis (EDA) focused on numeric columns. These functions will assist in quickly assessing distribution shapes, detect outliers and evaluate correlations
 
 -   `plot_numeric_distributions(df)`
