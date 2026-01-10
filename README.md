@@ -40,16 +40,6 @@ Provides a set of exploratory data analysis (EDA) focused on numeric columns. Th
     - Generates histogram‑based distribution plots for all numeric columns.
     - Helps identify skewness, modality, and potential outliers across variables.
 
--   `plot_numeric_boxplots(df)`
-    - Produces boxplots for each numeric column to highlight central tendency and spread.
-    - Effective for detecting extreme values, inconsistent scaling, and data quality issues.
-
--   `plot_correlation_heatmap(df)`
-    - Computes pairwise correlations among numeric variables and visualizes them in a heatmap.
-    - Helps uncover linear relationships, multicollinearity, and feature redundancy.
-
-
-
 
 **Numeric value checks**
 Numeric value checks ensure that numerical columns contain valid and meaningful values. These checks help detect outliers, impossible values, and violations of constraints that should logically apply to the data.
