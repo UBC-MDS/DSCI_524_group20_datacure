@@ -11,26 +11,31 @@ Datacure is a project designed to streamline data validation and cleaning proces
 
 **Table Level Integrity**
 
-Evaluates the overall structure of the DataFrame to prevent downstream failures
+Robustly load and clean tabular data from either a CSV file (via a local path or URL) or an existing pandas DataFrame. Evaluates the overall structure of the DataFrame to prevent downstream failures
 
--   `check_table_structure` 
-    - Detecting if the table is completely empty (no rows or no columns).
-    - Checking column headers for spaces or special characters that may break code.
-    - Identifying leading or trailing spaces within string cells across the table.
-    - Flagging inconsistencies that indicate improper loading or formatting.
+-   `load_or_validate_source`
+    - Input flexibility: Accepts either a CSV file (from a local path or URL) or an existing pandas DataFrame.
+    - Automatic delimiter detection: For CSVs, detects the delimiter using a sample of the file and handles common formatting issues.
+    - Corruption checks: Identifies inconsistencies such as mismatched column counts and ensures the first row is a proper header rather than data.
+    - Column header cleaning: Strips leading and trailing whitespace, replaces internal spaces with underscores, substitutes illegal characters with underscores.
+    - Data cleaning: Trims leading and trailing whitespace from all string values in the table.
+    - Change reporting: Returns a ChangeReport object summarizing all modifications made during loading and cleaning.
 
 
 **Categorical and Datetime Validation**
 
 Evaluates whether categorical and datetime columns in a DataFrame conform to predefined schemas to prevent errors in analysis and modeling.
 
--   `check_categories(df, column, allowed_categories)`
-    - Validates that all values in a specified categorical column belong to a predefined set of allowed categories.
-    - Reports invalid category values, their row indices, and a pass/fail status.
+-   `validate_categorical_schema(df, column, allowed_categories)`
+    - Checks whether all non-missing values in a categorical column belong to a predefined set of allowed categories.
+    - Identifies and reports invalid category values at the row level.
+    - Returns a pass/fail validation status along with a structured table of invalid records.
 
--   `check_datetime_format(df, columns, datetime_format)`
-    - Validates that one or more datetime columns conform to a specified datetime format.
-    - Returns either a success message or detailed diagnostics for columns that fail validation.
+
+-   `validate_datetime_schema(df, columns, datetime_format, coerce_invalid=False)`
+    - Checks whether datetime columns conform to a specified datetime format.
+    - Identifies and reports invalid datetime values at the row level.
+    -  Optionally (`coerce_invalid=True`) returns a copy of the DataFrame where valid values are converted to specified datetime type.
 
 **Numeric EDA Plotting**
 
@@ -70,22 +75,15 @@ To use datacure in your code:
 
 ``` python
 import pandas as pd
-from datacure import check_categories, check_datetime_format
+from datacure import validate_datetime_schema
 
 df = pd.DataFrame({
     "program": ["academic", "general", "unknown"],
     "start_date": ["2023-01-01", "2023-02-01", "01-03-2023"]
 })
 
-# Check categorical column
-result_categorical = check_categories(
-    df, 
-    column="program",
-    allowed_categories=["academic", "general", "vocational"]
-)
-
-# Check datetime format
-result_date = check_datetime_format(
+# Validate datetime format
+result = validate_datetime_schema(
     df,
     columns=["start_date"],
     datetime_format="%Y-%m-%d"
