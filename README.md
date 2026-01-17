@@ -70,7 +70,11 @@ You can install this package into your preferred Python environment using pip:
 ``` bash
 $ pip install datacure
 ```
+Inorder to run the tests successfully, use the command below:
 
+``` bash
+$ pytest -v
+```
 To use datacure in your code:
 
 ``` python
