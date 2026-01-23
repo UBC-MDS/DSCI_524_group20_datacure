@@ -40,7 +40,8 @@ keywords = []
 dependencies = [  
     "pandas>=2.0",
     "numpy>=1.25",
-    "matplotlib>=3.8",]
+    "matplotlib>=3.8",
+    "requests>=2.30",]
 
 [project.urls]
 Homepage = "https://github.com/UBC-MDS/datacure"
@@ -64,6 +65,7 @@ dev = [
     "pandas>=2.0",
     "numpy>=1.25",
     "matplotlib>=3.8",
+    "requests>=2.30",
 ]
 
 docs = [
@@ -88,7 +90,8 @@ tests = [
     "pytest-xdist",
     "pandas>=2.0",
     "numpy>=1.25",
-    "matplotlib>=3.8",    
+    "matplotlib>=3.8",
+    "requests>=2.30",    
 ]
 
 
