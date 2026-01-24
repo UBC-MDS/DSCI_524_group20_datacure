@@ -71,6 +71,8 @@ tests = [
     "pytest-randomly",
     "pytest-xdist",
     "pandas",
+    "requests",
+    "matplotlib"
 ]
 
 
