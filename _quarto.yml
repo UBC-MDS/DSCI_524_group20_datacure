@@ -1,12 +1,17 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "Datacure - streamline data validation and cleaning process"
+  title: "Datacure"
   navbar:
+    search: true
     left:
-      - href: reference/index.qmd
-        text: References
+      - text: Home
+        href: index.qmd
+      - text: References
+        href: reference/index.qmd
+        
 
 format:
   html:
@@ -17,15 +22,15 @@ format:
     toc: true
 
 quartodoc:
-  package: DSCI_524_group20_datacure
+  package: datacure
   dir: reference
   sections:
     - title: Datacure Functions
       desc: Functions to help you with data validation, data cleaning and plotting.
       contents:
-        - load_or_validate_source
-        - validate_categorical_schema
-        - validate_datetime_schema
-        - validate_numeric_column
-        - plot_numeric_distributions
+        - load_or_validate_source.load_or_validate_source
+        - validate_categorical_schema.validate_categorical_schema
+        - validate_datetime_schema.validate_datetime_schema
+        - validate_numeric_column.validate_numeric_column
+        - plots.plot_numeric_distributions
 
