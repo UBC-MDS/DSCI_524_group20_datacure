@@ -48,6 +48,15 @@ def validate_datetime_schema(df, columns, datetime_format, coerce_invalid=False)
             - raw_value : original value that failed validation
 
             An empty DataFrame indicates that no invalid values were detected.
+    
+    Examples
+    --------
+    >>> df = pd.DataFrame({"date": ["2023-01-01", "2023-02-30"]})
+    >>> validate_datetime_schema(
+    ...     df,
+    ...     columns=["date"],
+    ...     datetime_format="%Y-%m-%d"
+    ... )
     """
     # Input validation
     for col in columns:
