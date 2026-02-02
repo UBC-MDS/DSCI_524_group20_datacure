@@ -1,14 +1,12 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
 
 website:
   title: "Datacure"
   navbar:
     search: true
     left:
-      - text: Home
-        href: index.qmd
       - text: References
         href: reference/index.qmd
         

@@ -27,6 +27,15 @@ def validate_categorical_schema(df, column, allowed_categories):
             Overall validation status.
         invalid_records : pandas.DataFrame
             A DataFrame with columns ['index', 'column', 'raw_value'].
+    
+    Examples
+    --------
+    >>> df = pd.DataFrame({"color": ["red", "green", None]})
+    >>> validate_categorical_schema(
+    ...     df,
+    ...     column="color",
+    ...     allowed_categories=["red", "blue"]
+    ... )
     """
 
     # check input
