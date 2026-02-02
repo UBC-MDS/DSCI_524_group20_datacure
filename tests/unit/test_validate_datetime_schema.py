@@ -7,6 +7,7 @@ from datacure.validate_datetime_schema import validate_datetime_schema
 
 # case 1: All datetime values are valid (with NA ignored), so validation should pass
 def test_validate_datetime_schema_all_valid_pass():
+    """Test that validation passes when all datetime values are valid (NA ignored)."""
     df = pd.DataFrame(
         {"date": ["2025-01-01", "2025-12-31", None]},
         index=[0, 2, 5])
@@ -18,6 +19,7 @@ def test_validate_datetime_schema_all_valid_pass():
 
 # case 2: A single invalid datetime value should be recorded with its index, column, and raw value
 def test_validate_datetime_schema_single_invalid_records_row():
+    """Test that a single invalid datetime value is correctly recorded."""
     df = pd.DataFrame(
         {"date": ["2025-01-01", "2025-13-01"]},
         index=[1, 3])
@@ -31,8 +33,9 @@ def test_validate_datetime_schema_single_invalid_records_row():
     assert inv.iloc[0]["raw_value"] == "2025-13-01"
 
 
-#case 3: With coercion enabled, uncoercible values should be logged as invalid and validated_df should be correctly coerced
+# case 3: With coercion enabled, uncoercible values should be logged as invalid and validated_df should be correctly coerced
 def test_validate_datetime_schema_coerce_invalid_logs_uncoercible():
+    """Test that invalid datetime values are coerced to NaT and logged when coercion is enabled."""
     df = pd.DataFrame(
         {"date": ["2025-01-01", "not-a-date", "2025-03-01"]},
         index=[0, 4, 6])
@@ -59,6 +62,7 @@ def test_validate_datetime_schema_coerce_invalid_logs_uncoercible():
 
 # case 4: Referencing a non-existent column should raise a KeyError
 def test_validate_datetime_schema_missing_column_raises_keyerror():
+    """Test that referencing a missing column raises a KeyError."""
     df = pd.DataFrame(
         {"other": ["2025-01-01"]}, index=[0])
     with pytest.raises(KeyError):
@@ -67,6 +71,7 @@ def test_validate_datetime_schema_missing_column_raises_keyerror():
 
 # case 5: Using a different datetime_format argument should validate correctly
 def test_validate_datetime_schema_different_datetime_format():
+    """Test validation using a non-default datetime format."""
     df = pd.DataFrame(
         {"date": ["01/31/2025", "12/25/2025"]}, index=[1, 2])
     out = validate_datetime_schema(df, ["date"], "%m/%d/%Y")
@@ -75,9 +80,9 @@ def test_validate_datetime_schema_different_datetime_format():
     assert out["invalid_records"].empty
 
 
-
 # case 6: Column specified for validation is not present in the DataFrame
 def test_validate_datetime_schema_column_not_in_df_raises_error():
+    """Test that specifying a non-existent column raises a KeyError."""
     df = pd.DataFrame(
         {"start_date": ["2025-01-01"]}, index=[0])
     with pytest.raises(KeyError):
@@ -86,6 +91,7 @@ def test_validate_datetime_schema_column_not_in_df_raises_error():
 
 # case 7: coerce_invalid=True should successfully convert all valid strings to datetime and return a correct DataFrame
 def test_validate_datetime_schema_coerce_all_valid_outputs_correct_df():
+    """Test that all valid datetime strings are correctly coerced when coercion is enabled."""
     df = pd.DataFrame(
         {"date": ["2025-01-01", "2025-03-15", "2025-12-31", None]},
         index=[0, 2, 5, 9])
@@ -98,7 +104,7 @@ def test_validate_datetime_schema_coerce_all_valid_outputs_correct_df():
                 pd.Timestamp("2025-01-01"),
                 pd.Timestamp("2025-03-15"),
                 pd.Timestamp("2025-12-31"),
-                pd.NaT,  # NA should remain NA/NaT depending on implementation
+                pd.NaT,
             ]
         },
         index=[0, 2, 5, 9],
@@ -118,6 +124,7 @@ def test_validate_datetime_schema_coerce_all_valid_outputs_correct_df():
 
 # case 8: Multiple columns validation where one column contains invalid values
 def test_validate_datetime_schema_multiple_columns_one_invalid():
+    """Test validation when multiple columns are checked and one contains invalid values."""
     df = pd.DataFrame(
         {
             "start_date": ["2025-01-01", "2025-02-01"],
@@ -135,8 +142,10 @@ def test_validate_datetime_schema_multiple_columns_one_invalid():
     assert out["invalid_records"].iloc[0]["column"] == "end_date"
     assert out["invalid_records"].iloc[0]["raw_value"] == "invalid-date"
 
+
 # case 9: Multiple invalid datetime values in the same column
 def test_validate_datetime_schema_multiple_invalid_rows():
+    """Test that multiple invalid datetime values are all detected."""
     df = pd.DataFrame(
         {"date": ["2025-01-01", "bad", "2025-99-99", None]},
         index=[0, 1, 2, 3],
@@ -148,8 +157,10 @@ def test_validate_datetime_schema_multiple_invalid_rows():
     assert len(out["invalid_records"]) == 2
     assert set(out["invalid_records"]["index"]) == {1, 2}
 
+
 # case 10: All values invalid with coercion enabled
 def test_validate_datetime_schema_coerce_all_invalid():
+    """Test behavior when all datetime values are invalid with coercion enabled."""
     df = pd.DataFrame(
         {"date": ["bad", "also-bad"]},
         index=[5, 6],
@@ -166,8 +177,10 @@ def test_validate_datetime_schema_coerce_all_invalid():
     pdt.assert_frame_equal(out["validated_df"], expected_df)
     assert len(out["invalid_records"]) == 2
 
+
 # case 11: Empty DataFrame should pass validation
 def test_validate_datetime_schema_empty_dataframe():
+    """Test that an empty DataFrame passes validation."""
     df = pd.DataFrame({"date": []})
 
     out = validate_datetime_schema(df, ["date"], "%Y-%m-%d")

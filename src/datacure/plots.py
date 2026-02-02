@@ -21,6 +21,18 @@ def plot_numeric_distributions(df):
     None
         Displays histogram plots for each numeric column.
 
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = {
+    ...     "age": [25, 30, 35, 40, 45],
+    ...     "salary": [50000, 60000, 75000, 90000, 120000],
+    ...     "department": ["HR", "IT", "IT", "Finance", "HR"]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> plot_numeric_distributions(df)
+    # Displays histograms for "age" and "salary"
+
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError("df must be a pandas DataFrame")
